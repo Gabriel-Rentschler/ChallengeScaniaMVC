@@ -1,21 +1,19 @@
 package br.com.cargapesada.truckpass.controller;
 
-import java.util.List;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.cargapesada.truckpass.model.Veiculo;
 import br.com.cargapesada.truckpass.repository.VeiculoRepository;
 
-@RestController
+@Controller
 @RequestMapping("veiculos")
 public class VeiculoController {
 	private VeiculoRepository veiculoRepository;
@@ -25,21 +23,21 @@ public class VeiculoController {
 	}
 
 	@GetMapping
-	public List<Veiculo> listPosts(Model model) {
-		List<Veiculo> veiculos = veiculoRepository.findAll();
-		return veiculos;
+	public String listPosts(Model model) {
+		model.addAttribute("veiculos", veiculoRepository.findAll());
+		return null;
 	}
 
 	@GetMapping("/form")
 	public String showForm(Model model) {
 		model.addAttribute("veiculo", new Veiculo());
-		return "veiculo/form";
+		return null;
 	}
 
 	@GetMapping("/{id}")
 	public String findById(@PathVariable Long id, Model model) {
 		model.addAttribute("veiculo", veiculoRepository.findById(id).get());
-		return "veiculo/form";
+		return null;
 	}
 
 	@GetMapping("/{id}/delete")
